@@ -5,7 +5,8 @@ Vue component to display an interactive SVG map. Zoom, drag, clicks, etc.
 ```
 npm install vue-simple-svg-map --save
 ```
-
+## Demo
+https://walkerz88.github.io/vue-simple-svg-map/
 ## Usage
 ### Custom map
 First of all you should get SVG image of your map with regions.
