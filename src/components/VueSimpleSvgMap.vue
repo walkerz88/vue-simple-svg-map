@@ -18,7 +18,6 @@
       ...wrapperStyles,
     }"
   >
-    {{ previousMobileOverflowType }}
     <div
       class="simple-svg-map__content"
       style="position: absolute;"
@@ -199,12 +198,13 @@ export default {
     dragstart (event) {
       if (this.enableDrag) {
         if (this.mobilePreventScroll) {
+          console.log(0)
           const breakpoint = this.mobilePreventScroll.breakpoint || 1024;
           const selector = this.mobilePreventScroll.selector || 'body';
           const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
           if (mql.matches) {
             const $el = document.querySelector(selector);
-            this.previousMobileOverflowType = $el.style.overflow || getComputedStyle($el).overflow || 'auto';
+            this.previousMobileOverflowType = $el.style.overflow;
             $el.style.overflow = 'hidden';
           }
         }
@@ -235,13 +235,14 @@ export default {
       if (this.enableDrag) {
         this.dragAndDrop.dragStarted = false;
         this.dragAndDrop.mouseCursor = 'default';
+        if (this.mobilePreventScroll) {
+          console.log(1)
+          const selector = this.mobilePreventScroll.selector || 'body';
+          const $el = document.querySelector(selector);
+          $el.style.overflow = this.previousMobileOverflowType;
+        }
         setTimeout(() => {
           this.preventMouseEvents = false;
-          if (this.mobilePreventScroll) {
-            const selector = this.mobilePreventScroll.selector || 'body';
-            const $el = document.querySelector(selector);
-            $el.style.overflow = this.previousMobileOverflowType;
-          }
         }, 150);
       }
       this.$emit('dragend', event);
