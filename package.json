@@ -3,7 +3,7 @@
   "homepage": "https://github.com/walkerz88/vue-simple-svg-map",
   "private": false,
   "main": "./lib/vue-simple-svg-map.common.js",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "scripts": {
     "serve": "vue-cli-service serve",
     "predeploy": "vue-cli-service build --mode demo",

@@ -18,6 +18,7 @@
       ...wrapperStyles,
     }"
   >
+    {{ previousMobileOverflowType }}
     <div
       class="simple-svg-map__content"
       style="position: absolute;"
@@ -203,7 +204,7 @@ export default {
           const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
           if (mql.matches) {
             const $el = document.querySelector(selector);
-            this.previousMobileOverflowType = $el.style.overflow;
+            this.previousMobileOverflowType = $el.style.overflow || getComputedStyle($el).overflow || 'auto';
             $el.style.overflow = 'hidden';
           }
         }
