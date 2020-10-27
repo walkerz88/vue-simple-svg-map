@@ -74,6 +74,7 @@ data-path | String | d | Your regions `<path>` geometry variable name in map arr
 wrapper-styles | Object | `{position: 'relative', width: '100%', height: '600px'}` | Map wrapper css parameters
 map-styles | Object | `{shapeRendering: 'geometricPrecision', textRendering: 'geometricPrecision' imageRendering: 'optimizeQuality', fillRule: 'evenodd', clipRule: 'evenodd'}` | Styles of default svg image
 region-additional-styles | Object | {} | Additional styles for every regions `<path>`
+mobilePreventScroll | Boolean, Object | false | Prevent page from scroll on map drag on mobile devices. You could pass object with options `{breakpoint: 1024, selector: 'body'}` `breakpoint` - media breakpoint where scroll prevents, default: 1024. `selector` - selector of element to prevent scroll, default: 'body'. If you just pass TRUE - default values would be used.
 drag-cursor | String | grabbing | CSS cursor name when drag is active
 hover-cursor | String | pointer | CSS cursor name on region hover
 zoom-factor | Number | 0.8 | Zoom speed
@@ -101,4 +102,4 @@ zoom | Scroll event (Event if zoom is disabled)
 center-map | Fires if map was centered
 
 ## Feature
-I just started to create this component, so it will improved in feature.
+I just started to create this component, so it will be improved in feature.

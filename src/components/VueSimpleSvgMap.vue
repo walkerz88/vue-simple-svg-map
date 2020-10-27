@@ -65,6 +65,10 @@ export default {
         return []
       }
     },
+    viewBox: {
+      type: String,
+      required: true
+    },
     dataPath: {
       type: String,
       default: 'd'
@@ -149,10 +153,11 @@ export default {
       type: Number,
       default: 1
     },
-    viewBox: String
+    mobilePreventScroll: [Object, Boolean],
   },
   data () {
     return {
+      previousMobileOverflowType: null,
       dragAndDrop: {
         dragStarted: false,
         dragStartX: 0,
@@ -177,22 +182,31 @@ export default {
   methods: {
     mouseover (region) {
       if (!this.preventMouseEvents) {
-        this.$emit('mouseover', region)
+        this.$emit('mouseover', region);
       }
     },
     mouseleave (region) {
       if (!this.preventMouseEvents) {
-        this.$emit('mouseleave', region)
+        this.$emit('mouseleave', region);
       }
     },
     click (region) {
       if (!this.preventMouseEvents) {
-        this.$emit('click', region)
+        this.$emit('click', region);
       }
     },
     dragstart (event) {
-      console.log(event)
       if (this.enableDrag) {
+        if (this.mobilePreventScroll) {
+          const breakpoint = this.mobilePreventScroll.breakpoint || 1024;
+          const selector = this.mobilePreventScroll.selector || 'body';
+          const mql = window.matchMedia(`(max-width: ${breakpoint}px)`);
+          if (mql.matches) {
+            const $el = document.querySelector(selector);
+            this.previousMobileOverflowType = $el.style.overflow;
+            $el.style.overflow = 'hidden';
+          }
+        }
         this.dragAndDrop.dragStartX = event.pageX || event.touches[0].pageX;
         this.dragAndDrop.dragStartY = event.pageY || event.touches[0].pageY;
         this.dragAndDrop.dragStarted = true;
@@ -221,7 +235,12 @@ export default {
         this.dragAndDrop.dragStarted = false;
         this.dragAndDrop.mouseCursor = 'default';
         setTimeout(() => {
-          this.preventMouseEvents = false
+          this.preventMouseEvents = false;
+          if (this.mobilePreventScroll) {
+            const selector = this.mobilePreventScroll.selector || 'body';
+            const $el = document.querySelector(selector);
+            $el.style.overflow = this.previousMobileOverflowType;
+          }
         }, 150);
       }
       this.$emit('dragend', event);
